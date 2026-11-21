@@ -63,7 +63,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Back / On-Model Shot (Cross-fades on hover) */}
         <Image
-          src={product.backImage}
+          src={product.backImage || product.frontImage}
           alt={`${product.name} alternate view`}
           fill
           className={`object-cover object-center transition-all duration-700 group-hover:scale-105 ${

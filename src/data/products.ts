@@ -3,16 +3,18 @@ export interface Product {
   name: string;
   sku: string;
   tag: string;
-  tagType: "limited" | "restock" | "archive" | "new";
+  tagType: "limited" | "restock" | "archive" | "new" | "bestseller";
   price: number;
   originalPrice: number;
+  priceUsd: number;
   discount: string;
   gsm: string;
   fabric: string;
   fit: string;
-  category: "all" | "oversized-tees" | "acid-wash" | "hoodies";
+  category: "all" | "big-graphics" | "low-key" | "oversized-tees" | "acid-wash" | "hoodies";
   frontImage: string;
-  backImage: string;
+  backImage?: string;
+  cardBgColor?: string;
   colors: { name: string; hex: string }[];
   sizes: string[];
   description: string;
@@ -22,7 +24,83 @@ export interface Product {
   reviewCount: number;
 }
 
+export const MONKEY_CAP_PRODUCTS: Product[] = [
+  {
+    id: "mc-01",
+    name: "Monkey Business Tee",
+    sku: "MC—01",
+    tag: "BEST SELLER",
+    tagType: "bestseller",
+    price: 1499,
+    originalPrice: 2199,
+    priceUsd: 38,
+    discount: "32% OFF",
+    gsm: "280 GSM",
+    fabric: "100% Super-Combed French Terry Cotton",
+    fit: "Heavyweight · roomy fit",
+    category: "big-graphics",
+    frontImage: "/images/monkeycap/tee_black_orange.jpg",
+    cardBgColor: "#a3ff00",
+    colors: [{ name: "Black / Orange", hex: "#ff7700" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Signature oversized black tee with a vibrant hand-drawn smiling orange monkey face graphic. Heavyweight drape with reinforced Lycra collar.",
+    specs: ["280 GSM French Terry", "Reinforced 1.25\" Lycra Rib", "Tactile Puff Screenprint", "Roomy Drop-Shoulder Cut"],
+    stockRemaining: 12,
+    rating: 4.98,
+    reviewCount: 420,
+  },
+  {
+    id: "mc-02",
+    name: "Cap On, World Off",
+    sku: "MC—02",
+    tag: "NEW DROP",
+    tagType: "new",
+    price: 1499,
+    originalPrice: 2199,
+    priceUsd: 38,
+    discount: "32% OFF",
+    gsm: "280 GSM",
+    fabric: "100% Raw Chalk Combed Cotton",
+    fit: "Heavyweight · roomy fit",
+    category: "big-graphics",
+    frontImage: "/images/monkeycap/tee_cream_cap.jpg",
+    cardBgColor: "#eb3324",
+    colors: [{ name: "Natural / Cobalt", hex: "#1862ea" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Natural cream tee featuring the iconic sketch monkey sporting a dual-tone red & blue cap. Built for off-duty days and spontaneous adventures.",
+    specs: ["280 GSM Natural Cotton", "Distressed Sketch Print", "Pre-Shrunk Bio-Wash", "Heavy Boxy Drape"],
+    stockRemaining: 7,
+    rating: 4.95,
+    reviewCount: 312,
+  },
+  {
+    id: "mc-03",
+    name: "Little Legend Tee",
+    sku: "MC—03",
+    tag: "",
+    tagType: "limited",
+    price: 1349,
+    originalPrice: 1999,
+    priceUsd: 34,
+    discount: "30% OFF",
+    gsm: "240 GSM",
+    fabric: "100% Ringspun Breathable Cotton",
+    fit: "Soft cotton · easy fit",
+    category: "low-key",
+    frontImage: "/images/monkeycap/tee_cobalt_lime.jpg",
+    cardBgColor: "#ffcc00",
+    colors: [{ name: "Cobalt / Lime", hex: "#b4f400" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Vibrant royal cobalt blue tee featuring high-density neon-lime monkey cap micro-embroidery on the left chest. Minimalist front with big energy.",
+    specs: ["240 GSM Ringspun Cotton", "High-Density Micro-Embroidery", "Silicone Soft Wash", "Relaxed Everyday Cut"],
+    stockRemaining: 15,
+    rating: 4.92,
+    reviewCount: 245,
+  },
+];
+
 export const PRODUCTS: Product[] = [
+  ...MONKEY_CAP_PRODUCTS,
   {
     id: "mm-01",
     name: "Cyber Monkey // 280 GSM Heavyweight Tee",
@@ -31,6 +109,7 @@ export const PRODUCTS: Product[] = [
     tagType: "archive",
     price: 1499,
     originalPrice: 2199,
+    priceUsd: 38,
     discount: "32% OFF",
     gsm: "280 GSM",
     fabric: "100% Super-Combed French Terry Cotton",
@@ -64,6 +143,7 @@ export const PRODUCTS: Product[] = [
     tagType: "limited",
     price: 1399,
     originalPrice: 1999,
+    priceUsd: 36,
     discount: "30% OFF",
     gsm: "260 GSM",
     fabric: "100% Ringspun Compact Cotton",
@@ -96,6 +176,7 @@ export const PRODUCTS: Product[] = [
     tagType: "archive",
     price: 1599,
     originalPrice: 2299,
+    priceUsd: 42,
     discount: "30% OFF",
     gsm: "290 GSM",
     fabric: "Heavyweight Enzyme Mineral Washed Terry",
@@ -128,6 +209,7 @@ export const PRODUCTS: Product[] = [
     tagType: "limited",
     price: 2799,
     originalPrice: 3899,
+    priceUsd: 68,
     discount: "28% OFF",
     gsm: "420 GSM",
     fabric: "Ultra-Dense Brushed Cotton Fleece",
@@ -151,69 +233,5 @@ export const PRODUCTS: Product[] = [
     stockRemaining: 6,
     rating: 4.98,
     reviewCount: 462,
-  },
-  {
-    id: "mm-05",
-    name: "Reversible Underground // Boxy Graphic Tee",
-    sku: "MM-SS26-044",
-    tag: "NEW DROP",
-    tagType: "new",
-    price: 1449,
-    originalPrice: 2099,
-    discount: "31% OFF",
-    gsm: "270 GSM",
-    fabric: "Compact Organic Combed Cotton",
-    fit: "Drop-Shoulder Boxy Drape",
-    category: "oversized-tees",
-    frontImage: "/images/products/tee_studio_white.jpg",
-    backImage: "/images/editorial/lookbook_2.jpg",
-    colors: [
-      { name: "Black Shadow", hex: "#131418" },
-      { name: "Raw Chalk", hex: "#dedcd4" },
-    ],
-    sizes: ["S", "M", "L", "XL"],
-    description:
-      "A dual-sided minimal essential with clean front chest typography and large-scale industrial monkey archival schematic on the back. Stitched with anti-twist side seams.",
-    specs: [
-      "270 GSM Combed Cotton",
-      "Micro-Tactile Puff Screenprint",
-      "Anti-Twist Seam Engineering",
-      "Reinforced Shoulder Taping",
-    ],
-    stockRemaining: 14,
-    rating: 4.89,
-    reviewCount: 112,
-  },
-  {
-    id: "mm-06",
-    name: "Chaos Theory // Distressed Heavy Terry Tee",
-    sku: "MM-SS26-045",
-    tag: "RESTOCKED TODAY",
-    tagType: "restock",
-    price: 1499,
-    originalPrice: 2149,
-    discount: "30% OFF",
-    gsm: "280 GSM",
-    fabric: "Bio-Washed French Terry Cotton",
-    fit: "Wide Shoulder Street Fit",
-    category: "acid-wash",
-    frontImage: "/images/products/mineral_tee_front.jpg",
-    backImage: "/images/products/mineral_tee_back.jpg",
-    colors: [
-      { name: "Washed Sand", hex: "#8c8275" },
-      { name: "Washed Carbon", hex: "#222329" },
-    ],
-    sizes: ["M", "L", "XL", "XXL"],
-    description:
-      "Hand-sprayed archival graphic with distressed twin-stitched hems. Treated with silicone bio-wash for a weighted drape that feels broken-in from day one.",
-    specs: [
-      "280 GSM Bio-Washed Terry",
-      "Silicone Soft-Drape Treatment",
-      "Distressed Raw Hems",
-      "Oversized Back Typography",
-    ],
-    stockRemaining: 4,
-    rating: 4.95,
-    reviewCount: 329,
   },
 ];
