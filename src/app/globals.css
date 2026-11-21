@@ -5,8 +5,24 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --color-canvas: #050505;
-  --color-surface: #0f0f11;
-  --color-border: #1f1f23;
+  --color-surface: #0c0d10;
+  --color-surface-hover: #14151a;
+  --color-border: #1f2028;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 @layer base {

@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { TechSpecs } from "@/components/TechSpecs";
+import { MarqueeBanner } from "@/components/MarqueeBanner";
+import { AtelierBento } from "@/components/AtelierBento";
 import { ProductCard } from "@/components/ProductCard";
 import { Lookbook } from "@/components/Lookbook";
 import { FitCalculatorModal } from "@/components/FitCalculatorModal";
@@ -23,7 +24,7 @@ export default function Home() {
 
   return (
     <CartProvider>
-      <div className="min-h-screen bg-black text-neutral-100 flex flex-col font-sans selection:bg-neutral-800 selection:text-white">
+      <div className="min-h-screen bg-[#050505] text-neutral-100 flex flex-col font-sans selection:bg-neutral-800 selection:text-white">
         
         {/* Navigation Bar */}
         <Navbar />
@@ -31,11 +32,14 @@ export default function Home() {
         {/* Hero Section */}
         <Hero />
 
-        {/* Garment Architecture / Tech Specs */}
-        <TechSpecs />
+        {/* 21st.dev Running Brand Tape */}
+        <MarqueeBanner />
 
-        {/* Drops / Product Catalog */}
-        <section id="drops" className="py-24 bg-[#09090b] border-b border-neutral-900">
+        {/* 21st.dev Style Bento Grid: Garment Blueprint & Architecture */}
+        <AtelierBento />
+
+        {/* Product Catalog: Available Drops */}
+        <section id="drops" className="py-24 bg-[#09090c] border-b border-neutral-900">
           <div className="max-w-7xl mx-auto px-4 lg:px-8">
             
             {/* Header & Filter Controls */}
@@ -77,7 +81,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Product Cards Grid */}
+            {/* Product Cards Grid with 21st.dev Hover Size Slider */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
