@@ -3,11 +3,12 @@
 import React, { useState } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
+import { HeroSection } from "@/components/HeroSection";
 import { MarqueeBanner } from "@/components/MarqueeBanner";
-import { CategoryBanners } from "@/components/CategoryBanners";
-import { AtelierBento } from "@/components/AtelierBento";
+import { CategoryTiles } from "@/components/CategoryTiles";
 import { ProductCard } from "@/components/ProductCard";
+import { PhilosophyGrid } from "@/components/PhilosophyGrid";
+import { AtelierBento } from "@/components/AtelierBento";
 import { Lookbook } from "@/components/Lookbook";
 import { FitCalculatorModal } from "@/components/FitCalculatorModal";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -38,14 +39,14 @@ export default function Home() {
         {/* Minimalist Sticky Header */}
         <Navbar />
 
-        {/* Cinematic Full-Bleed Campaign Hero */}
-        <Hero />
+        {/* Multi-Slide Cinematic Campaign Hero (luxafoir / Represent Clo inspired) */}
+        <HeroSection onSelectCategory={handleSelectCategory} />
 
         {/* Infinite Brand Running Tape */}
         <MarqueeBanner />
 
-        {/* Represent Clo Style Category Banners */}
-        <CategoryBanners onSelectCategory={handleSelectCategory} />
+        {/* Full-Height Category Tiles (luxafoir / Represent Clo inspired) */}
+        <CategoryTiles onSelectCategory={handleSelectCategory} />
 
         {/* Product Catalog / Drop Section */}
         <section id="drops" className="py-24 bg-[#08080a] border-b border-neutral-900">
@@ -66,7 +67,7 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Category Filter Pills (Rectangular rounded radii, strictly NO oval) */}
+              {/* Category Filter Pills (Strictly rectangular rounded radii, NO oval) */}
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   { id: "all", label: "All Garments (6)" },
@@ -90,14 +91,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Product Cards Grid with Represent Clo Style Quick Size Bar */}
+            {/* Product Cards Grid with Dual-Angle Cross Fade & Quick Size Drawer */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
-            {/* Assistance Card */}
+            {/* Sizing Assistance Banner */}
             <div className="mt-16 p-6 sm:p-8 rounded-2xl bg-neutral-900/60 border border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
               <div>
                 <h4 className="text-base font-bold text-white tracking-tight uppercase font-mono">
@@ -121,7 +122,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 21st.dev Style Bento Grid: Garment Blueprint & Architecture */}
+        {/* Brand Manifesto & Philosophy (RAAVN-ECOM inspired) */}
+        <div id="philosophy">
+          <PhilosophyGrid />
+        </div>
+
+        {/* Atelier Architecture Bento Grid */}
         <AtelierBento />
 
         {/* Editorial Community Lookbook */}
