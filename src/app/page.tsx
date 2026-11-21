@@ -5,6 +5,7 @@ import { CartProvider } from "@/context/CartContext";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { MarqueeBanner } from "@/components/MarqueeBanner";
+import { CategoryBanners } from "@/components/CategoryBanners";
 import { AtelierBento } from "@/components/AtelierBento";
 import { ProductCard } from "@/components/ProductCard";
 import { Lookbook } from "@/components/Lookbook";
@@ -22,24 +23,32 @@ export default function Home() {
       ? PRODUCTS
       : PRODUCTS.filter((p) => p.category === activeCategory);
 
+  const handleSelectCategory = (cat: string) => {
+    setActiveCategory(cat);
+    const dropsEl = document.getElementById("drops");
+    if (dropsEl) {
+      dropsEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <CartProvider>
       <div className="min-h-screen bg-[#050505] text-neutral-100 flex flex-col font-sans selection:bg-neutral-800 selection:text-white">
         
-        {/* Navigation Bar */}
+        {/* Minimalist Sticky Header */}
         <Navbar />
 
-        {/* Hero Section */}
+        {/* Cinematic Full-Bleed Campaign Hero */}
         <Hero />
 
-        {/* 21st.dev Running Brand Tape */}
+        {/* Infinite Brand Running Tape */}
         <MarqueeBanner />
 
-        {/* 21st.dev Style Bento Grid: Garment Blueprint & Architecture */}
-        <AtelierBento />
+        {/* Represent Clo Style Category Banners */}
+        <CategoryBanners onSelectCategory={handleSelectCategory} />
 
-        {/* Product Catalog: Available Drops */}
-        <section id="drops" className="py-24 bg-[#09090c] border-b border-neutral-900">
+        {/* Product Catalog / Drop Section */}
+        <section id="drops" className="py-24 bg-[#08080a] border-b border-neutral-900">
           <div className="max-w-7xl mx-auto px-4 lg:px-8">
             
             {/* Header & Filter Controls */}
@@ -47,7 +56,7 @@ export default function Home() {
               <div>
                 <div className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 mb-2 uppercase tracking-widest font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                  <span>COLLECTION 04 ARCHIVE // LIMITED BATCHES</span>
+                  <span>COLLECTION 04 ARCHIVE // LIMITED RUNS</span>
                 </div>
                 <h2 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
                   Available Drops.
@@ -81,7 +90,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Product Cards Grid with 21st.dev Hover Size Slider */}
+            {/* Product Cards Grid with Represent Clo Style Quick Size Bar */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
@@ -111,6 +120,9 @@ export default function Home() {
 
           </div>
         </section>
+
+        {/* 21st.dev Style Bento Grid: Garment Blueprint & Architecture */}
+        <AtelierBento />
 
         {/* Editorial Community Lookbook */}
         <Lookbook />
