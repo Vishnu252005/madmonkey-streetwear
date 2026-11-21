@@ -1,101 +1,118 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ArrowRightIcon } from "./icons";
 
 export function Lookbook() {
-  const looks = [
+  const editorialShots = [
     {
-      title: "LOOK 01 // TOKYO DRIFT",
-      location: "INDIRANAGAR ROOFTOP // BLR",
-      fit: "Cyber Ape 260 GSM Tee (XL) + Vintage Cargo Shorts",
-      accent: "border-[#ccff00]/40",
-      bgGradient: "from-zinc-900 via-neutral-900 to-black",
-      tag: "OVERSIZED STREET",
+      image: "/images/editorial/lookbook_1.jpg",
+      title: "LOOK 01 // INDIRANAGAR ARCHIVE",
+      location: "BLR · 12.9716° N",
+      pieces: "Cyber Monkey 280 GSM Tee (XL) + Tactical Cargo Short",
+      tag: "OVERSIZED BOXY",
+      span: "md:col-span-2 md:row-span-2",
+      height: "h-[500px]",
     },
     {
-      title: "LOOK 02 // ACID NIGHTS",
-      location: "FORT KOCHI BEACH ROAD // KL",
-      fit: "Acid Wash Gorilla Tee (L) + Raw Denim",
-      accent: "border-[#ff4d00]/40",
-      bgGradient: "from-stone-900 via-zinc-950 to-neutral-900",
-      tag: "DISTRESSED VINTAGE",
+      image: "/images/editorial/lookbook_2.jpg",
+      title: "LOOK 02 // TOKYO TUNER",
+      location: "SHIBUYA · 35.6580° N",
+      pieces: "Tokyo Garage Ape Tee (L) + Raw Selvedge Denim",
+      tag: "VINTAGE WASH",
+      span: "md:col-span-1 md:row-span-1",
+      height: "h-[240px]",
     },
     {
-      title: "LOOK 03 // 380 GSM ARMOR",
-      location: "BANDRA SKATEPARK // BOM",
-      fit: "Monkey Syndicate Hoodie (L) + Washed Chinos",
-      accent: "border-blue-500/40",
-      bgGradient: "from-blue-950/30 via-zinc-950 to-black",
-      tag: "HEAVY FLEECE",
+      image: "/images/editorial/lookbook_3.jpg",
+      title: "LOOK 03 // SYNDICATE FLEECE",
+      location: "BANDRA · 19.0596° N",
+      pieces: "Syndicate 420 GSM Boxy Hoodie (L) + Flared Sweats",
+      tag: "WINTER GRAIL",
+      span: "md:col-span-1 md:row-span-1",
+      height: "h-[240px]",
+    },
+    {
+      image: "/images/editorial/lookbook_4.jpg",
+      title: "LOOK 04 // CORROSION GORILLA",
+      location: "FORT KOCHI · 9.9656° N",
+      pieces: "Acid Gorilla Mineral Tee (M) + Distressed Canvas",
+      tag: "MINERAL WASH",
+      span: "md:col-span-1 md:row-span-1",
+      height: "h-[260px]",
+    },
+    {
+      image: "/images/editorial/lookbook_5.jpg",
+      title: "LOOK 05 // UNDERGROUND SKATE",
+      location: "SOHO · 51.5136° N",
+      pieces: "Reversible Boxy Skater Tee (L) + Washed Chinos",
+      tag: "SKATE ARCHIVE",
+      span: "md:col-span-2 md:row-span-1",
+      height: "h-[260px]",
     },
   ];
 
   return (
-    <section id="lookbook" className="py-20 bg-[#09090b] border-b border-[#1b1c28]">
+    <section id="lookbook" className="py-24 bg-[#070709] border-b border-neutral-900">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
-            <span className="text-xs font-mono text-[#ccff00] font-bold uppercase tracking-wider block mb-2">
-              // EDITORIAL ARCHIVE
-            </span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 mb-2.5 uppercase tracking-widest font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              <span>COLLECTION 04 STREET ARCHIVE</span>
+            </div>
             <h2 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
-              Community Lookbook.
+              The Lookbook.
             </h2>
           </div>
           <a
             href="#drops"
-            className="inline-flex items-center gap-2 text-xs font-mono font-bold text-zinc-300 hover:text-[#ccff00] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono font-bold text-neutral-300 hover:text-white uppercase tracking-wider transition-colors"
           >
-            <span>VIEW ALL 18 LOOKS</span>
+            <span>Explore All Garments</span>
             <ArrowRightIcon className="w-3.5 h-3.5" />
           </a>
         </div>
 
-        {/* Lookbook Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {looks.map((look, i) => (
+        {/* High Fashion Editorial Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {editorialShots.map((item, idx) => (
             <div
-              key={i}
-              className={`relative rounded-2xl bg-gradient-to-b ${look.bgGradient} border ${look.accent} p-6 flex flex-col justify-between min-h-[380px] overflow-hidden group hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] transition-all`}
+              key={idx}
+              className={`relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 group hover:border-neutral-700 transition-all ${item.span} ${item.height}`}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-black/60 border border-zinc-800 text-[#ccff00]">
-                  {look.tag}
-                </span>
-                <span className="text-[10px] font-mono text-zinc-500">
-                  LOOK 0{i + 1}
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-[0.9] group-hover:brightness-100"
+              />
+
+              {/* Dark Gradient Overlay for Typography Legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+              {/* Top Tag */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono tracking-wider font-bold text-neutral-200 border border-neutral-700 uppercase">
+                  {item.tag}
                 </span>
               </div>
 
-              {/* Graphic Motif Center */}
-              <div className="my-auto flex flex-col items-center justify-center text-center py-8">
-                <div className="w-20 h-20 rounded-2xl bg-black/80 border border-zinc-800 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-[#ccff00] transition-all duration-300">
-                  <span className="text-3xl font-black text-[#ccff00]">
-                    🐒
-                  </span>
+              {/* Bottom Meta */}
+              <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col justify-end">
+                <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-1">
+                  <span className="text-amber-400 font-semibold">{item.location}</span>
+                  <span>LOOK 0{idx + 1}</span>
                 </div>
-                <h3 className="text-xl font-black text-white uppercase tracking-tight">
-                  {look.title}
+                <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  {item.title}
                 </h3>
-                <span className="text-xs font-mono text-zinc-400 mt-1">
-                  {look.location}
-                </span>
-              </div>
-
-              <div className="pt-4 border-t border-zinc-800/60">
-                <p className="text-xs text-zinc-300 font-mono mb-3">
-                  {look.fit}
+                <p className="text-xs text-neutral-300 font-mono mt-0.5 line-clamp-1">
+                  {item.pieces}
                 </p>
-                <a
-                  href="#drops"
-                  className="w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-[#ccff00] hover:text-black border border-zinc-800 text-zinc-300 font-bold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
-                >
-                  <span>Shop This Fit</span>
-                  <ArrowRightIcon className="w-3.5 h-3.5" />
-                </a>
               </div>
             </div>
           ))}

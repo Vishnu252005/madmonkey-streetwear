@@ -1,80 +1,85 @@
 import React from "react";
-import { ShieldCheckIcon, SparklesIcon, TruckIcon, FlameIcon } from "./icons";
+import { ShieldCheckIcon, SparklesIcon, TruckIcon } from "./icons";
 
 export function TechSpecs() {
   const specs = [
     {
-      icon: <SparklesIcon className="w-5 h-5 text-[#ccff00]" />,
-      title: "260 GSM French Terry",
-      description: "Dense, heavyweight knit that refuses to cling, wrinkle, or lose its structured boxy silhouette.",
-      tag: "FABRIC DENSITY",
+      step: "01",
+      title: "280 GSM French Terry",
+      subtitle: "CUSTOM-MILLED DENSITY",
+      description:
+        "Knitted from 100% long-staple combed cotton yarns. Substantially heavier than fast-fashion tees to maintain a stiff, structured boxy drape that never sags.",
     },
     {
-      icon: <FlameIcon className="w-5 h-5 text-[#ff4d00]" />,
-      title: "3D High-Density Puff Print",
-      description: "Custom formulated tactile silicone & puff rubber. Won't crack or peel after 50+ wash cycles.",
-      tag: "PRINT PRECISION",
+      step: "02",
+      title: "1.25\" Lycra Neckband",
+      subtitle: "ANTI-COLLAPSE ARCHITECTURE",
+      description:
+        "Engineered with a dense 1x1 rib knit infused with high-recovery Lycra core. Eliminates bacon neck and maintains a razor-sharp circular neckline through 50+ washes.",
     },
     {
-      icon: <ShieldCheckIcon className="w-5 h-5 text-emerald-400 text-base" />,
-      title: "Zero-Sag 1.25\" Ribbed Collar",
-      description: "Engineered with reinforced Lycra core ribbing so your neckline stays crisp and flat forever.",
-      tag: "COLLAR ARCHITECTURE",
+      step: "03",
+      title: "Twin-Needle Blind Stitching",
+      subtitle: "STRUCTURAL LONGEVITY",
+      description:
+        "Industrial reinforced topstitching across the drop shoulders, armholes, and hem. Prevents torque twisting in the wash and secures heavy seams under tension.",
     },
     {
-      icon: <TruckIcon className="w-5 h-5 text-blue-400" />,
-      title: "Pre-Shrunk & Bio-Washed",
-      description: "Enzyme bio-washed to strip fuzz and eliminate shrinkage before your tee even leaves our facility.",
-      tag: "PRE-SHRUNK GUARANTEE",
+      step: "04",
+      title: "Pre-Shrunk Bio-Enzyme Wash",
+      subtitle: "ZERO-SHRINK GUARANTEE",
+      description:
+        "Every batch is submerged in natural enzyme baths to eliminate fabric fuzz and pre-shrink cotton fibers. The oversized fit you purchase is the exact fit you keep.",
     },
   ];
 
   return (
-    <section className="py-16 bg-[#0c0d13] border-b border-[#1b1c28]">
+    <section id="specs" className="py-20 bg-black border-b border-neutral-900">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#ccff00] mb-2 uppercase tracking-wider font-bold">
-              <span>// ENGINEERING STREETWEAR</span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 mb-2.5 uppercase tracking-widest font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span>GARMENT ARCHITECTURE & CRAFTSMANSHIP</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-              Anatomy of a Mad Monkey Tee.
+            <h2 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
+              The Spec Sheet.
             </h2>
           </div>
-          <p className="text-sm text-zinc-400 max-w-md font-mono">
-            Every stitch, seam, and print layer is built to outlast ordinary fast-fashion blanks.
+          <p className="text-sm text-neutral-400 max-w-md font-mono leading-relaxed">
+            Engineered like industrial hardware. Every millimeter of our pattern is calibrated for structured volume and permanent drape.
           </p>
         </div>
 
         {/* Spec Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {specs.map((s, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-[#12131b] border border-[#20222f] hover:border-[#2f3246] transition-all flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-neutral-900/60 border border-neutral-800 hover:border-neutral-700 transition-all flex flex-col justify-between group hover:bg-neutral-900"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#171924] border border-[#26283b] flex items-center justify-center">
-                    {s.icon}
-                  </div>
-                  <span className="text-[10px] font-mono text-zinc-500 font-bold uppercase tracking-wider">
-                    {s.tag}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-2xl font-black text-neutral-600 font-mono group-hover:text-white transition-colors">
+                    {s.step}
+                  </span>
+                  <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase px-2 py-0.5 rounded bg-neutral-800/80 border border-neutral-700/60">
+                    {s.subtitle}
                   </span>
                 </div>
-                <h3 className="text-base font-bold text-white mb-2">
+                <h3 className="text-lg font-bold text-white mb-2 tracking-tight">
                   {s.title}
                 </h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-neutral-400 leading-relaxed font-sans">
                   {s.description}
                 </p>
               </div>
 
-              <div className="mt-6 pt-3 border-t border-zinc-800/40 flex items-center justify-between text-[11px] font-mono text-zinc-500">
-                <span>SPEC-VERIFIED</span>
-                <span className="text-emerald-400 font-bold">100% OK</span>
+              <div className="mt-8 pt-4 border-t border-neutral-800/60 flex items-center justify-between text-[11px] font-mono text-neutral-500">
+                <span>LAB TESTED</span>
+                <span className="text-neutral-300 font-bold uppercase tracking-wider">PASSED · 50+ WASHES</span>
               </div>
             </div>
           ))}

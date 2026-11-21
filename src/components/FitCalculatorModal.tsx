@@ -20,7 +20,7 @@ export function FitCalculatorModal() {
   if (weightKg < 62 || totalInches < 67) {
     recommendedSize = fitPreference === "super-oversized" ? "M" : "S";
   } else if (weightKg <= 73 && totalInches <= 71) {
-    recommendedSize = fitPreference === "super-oversized" ? "L" : fitPreference === "standard" ? "M" : "M";
+    recommendedSize = fitPreference === "super-oversized" ? "L" : "M";
   } else if (weightKg <= 84 && totalInches <= 73) {
     recommendedSize = fitPreference === "super-oversized" ? "XL" : "L";
   } else if (weightKg <= 94) {
@@ -40,28 +40,28 @@ export function FitCalculatorModal() {
   const curr = measurements[recommendedSize];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg rounded-2xl bg-[#12131c] border border-[#26283b] p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-lg rounded-2xl bg-neutral-900 border border-neutral-800 p-6 shadow-2xl">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#212332]">
+        <div className="flex items-center justify-between pb-4 border-b border-neutral-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#ccff00]/10 border border-[#ccff00]/30 flex items-center justify-center">
-              <SlidersIcon className="w-4 h-4 text-[#ccff00]" />
+            <div className="w-8 h-8 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center">
+              <SlidersIcon className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">
-                Oversized Fit Finder
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                Garment Fit Calculator
               </h3>
-              <p className="text-xs text-zinc-400 font-mono">
-                Engineered for 260 GSM Boxy Cut
+              <p className="text-xs text-neutral-400 font-mono">
+                Engineered for 280 GSM Boxy Tailoring
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={closeFitModal}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
           >
             <CloseIcon className="w-5 h-5" />
           </button>
@@ -72,33 +72,33 @@ export function FitCalculatorModal() {
           {/* Height */}
           <div>
             <div className="flex justify-between text-xs font-mono mb-2">
-              <span className="text-zinc-400 uppercase">Your Height:</span>
-              <span className="text-[#ccff00] font-bold">
+              <span className="text-neutral-400 uppercase">Your Height:</span>
+              <span className="text-white font-bold">
                 {heightFt}&apos;{heightIn}&quot; ({Math.round((heightFt * 12 + heightIn) * 2.54)} cm)
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <div className="flex items-center gap-2 bg-[#181924] border border-[#27293a] px-3 py-2 rounded-xl">
-                <span className="text-xs font-mono text-zinc-400">Feet:</span>
+              <div className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 px-3 py-2 rounded-xl">
+                <span className="text-xs font-mono text-neutral-400">Feet:</span>
                 <input
                   type="range"
                   min="4"
                   max="6"
                   value={heightFt}
                   onChange={(e) => setHeightFt(Number(e.target.value))}
-                  className="w-full accent-[#ccff00]"
+                  className="w-full accent-white"
                 />
                 <span className="text-xs font-mono font-bold text-white w-4">{heightFt}</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#181924] border border-[#27293a] px-3 py-2 rounded-xl">
-                <span className="text-xs font-mono text-zinc-400">Inches:</span>
+              <div className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 px-3 py-2 rounded-xl">
+                <span className="text-xs font-mono text-neutral-400">Inches:</span>
                 <input
                   type="range"
                   min="0"
                   max="11"
                   value={heightIn}
                   onChange={(e) => setHeightIn(Number(e.target.value))}
-                  className="w-full accent-[#ccff00]"
+                  className="w-full accent-white"
                 />
                 <span className="text-xs font-mono font-bold text-white w-4">{heightIn}</span>
               </div>
@@ -108,100 +108,87 @@ export function FitCalculatorModal() {
           {/* Weight */}
           <div>
             <div className="flex justify-between text-xs font-mono mb-2">
-              <span className="text-zinc-400 uppercase">Your Weight:</span>
-              <span className="text-[#ccff00] font-bold">{weightKg} kg</span>
+              <span className="text-neutral-400 uppercase">Your Weight:</span>
+              <span className="text-white font-bold">{weightKg} KG ({Math.round(weightKg * 2.204)} LBS)</span>
             </div>
-            <div className="flex items-center gap-3 bg-[#181924] border border-[#27293a] px-4 py-2.5 rounded-xl">
+            <div className="bg-neutral-950 border border-neutral-800 px-3 py-2 rounded-xl flex items-center gap-3">
               <input
                 type="range"
                 min="45"
-                max="110"
+                max="120"
                 value={weightKg}
                 onChange={(e) => setWeightKg(Number(e.target.value))}
-                className="w-full accent-[#ccff00]"
+                className="w-full accent-white"
               />
-              <span className="text-xs font-mono font-bold text-white min-w-10 text-right">
-                {weightKg} kg
-              </span>
+              <span className="text-xs font-mono font-bold text-white w-10 text-right">{weightKg}kg</span>
             </div>
           </div>
 
-          {/* Fit Preference */}
+          {/* Fit Silhouette Preference */}
           <div>
-            <div className="text-xs font-mono text-zinc-400 uppercase mb-2">
-              Fit Preference:
-            </div>
+            <span className="text-xs font-mono text-neutral-400 uppercase block mb-2">
+              Preferred Silhouette Drape:
+            </span>
             <div className="grid grid-cols-3 gap-2">
-              {(
-                [
-                  { id: "standard", label: "Clean Street" },
-                  { id: "boxy", label: "Boxy Oversized" },
-                  { id: "super-oversized", label: "Skater Baggy" },
-                ] as const
-              ).map((f) => (
+              {[
+                { id: "standard", label: "Clean / Subtle" },
+                { id: "boxy", label: "Signature Boxy" },
+                { id: "super-oversized", label: "Heavy Oversize" },
+              ].map((opt) => (
                 <button
-                  key={f.id}
+                  key={opt.id}
                   type="button"
-                  onClick={() => setFitPreference(f.id)}
-                  className={`py-2 px-1 text-center rounded-xl text-xs font-mono font-semibold border transition-all ${
-                    fitPreference === f.id
-                      ? "bg-[#ccff00] text-black border-[#ccff00]"
-                      : "bg-[#181924] border-[#252838] text-zinc-300 hover:text-white"
+                  onClick={() => setFitPreference(opt.id as any)}
+                  className={`py-2 px-2 rounded-lg text-xs font-mono font-semibold border transition-all text-center ${
+                    fitPreference === opt.id
+                      ? "bg-white text-black border-white shadow-sm"
+                      : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white"
                   }`}
                 >
-                  {f.label}
+                  {opt.label}
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Recommendation Output Card */}
-        <div className="p-4 rounded-xl bg-gradient-to-br from-[#171926] to-[#0e1017] border border-[#2c2f42] mb-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-[11px] font-mono text-zinc-400 uppercase">
-                Recommended Size:
-              </span>
-              <div className="text-3xl font-black text-[#ccff00] font-mono mt-0.5">
-                {recommendedSize}
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs font-semibold">
-                Perfect Drop Fit
-              </span>
-              <p className="text-[11px] text-zinc-400 mt-1">
-                260 GSM drape with no cling
-              </p>
-            </div>
+        {/* Calculated Result Box */}
+        <div className="p-4 rounded-xl bg-black border border-neutral-800 mb-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-mono text-neutral-400 uppercase">
+              RECOMMENDED SPEC SIZE:
+            </span>
+            <span className="px-3 py-1 rounded-md bg-white text-black font-black text-sm font-mono">
+              SIZE {recommendedSize}
+            </span>
           </div>
 
-          {/* Dimension Details */}
-          <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-zinc-800/60 text-center">
-            <div className="bg-black/30 p-2 rounded-lg">
-              <span className="text-[10px] text-zinc-400 font-mono block">CHEST</span>
-              <strong className="text-xs text-white font-mono">{curr.chest}&quot;</strong>
+          {/* Garment Dimensional Blueprint */}
+          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-neutral-800 text-center text-xs font-mono">
+            <div className="p-2 rounded bg-neutral-900/60">
+              <span className="text-neutral-500 block text-[10px]">CHEST</span>
+              <strong className="text-white text-sm">{curr.chest}&quot;</strong>
             </div>
-            <div className="bg-black/30 p-2 rounded-lg">
-              <span className="text-[10px] text-zinc-400 font-mono block">LENGTH</span>
-              <strong className="text-xs text-white font-mono">{curr.length}&quot;</strong>
+            <div className="p-2 rounded bg-neutral-900/60">
+              <span className="text-neutral-500 block text-[10px]">LENGTH</span>
+              <strong className="text-white text-sm">{curr.length}&quot;</strong>
             </div>
-            <div className="bg-black/30 p-2 rounded-lg">
-              <span className="text-[10px] text-zinc-400 font-mono block">SHOULDER</span>
-              <strong className="text-xs text-white font-mono">{curr.shoulder}&quot;</strong>
+            <div className="p-2 rounded bg-neutral-900/60">
+              <span className="text-neutral-500 block text-[10px]">SHOULDER</span>
+              <strong className="text-white text-sm">{curr.shoulder}&quot;</strong>
             </div>
           </div>
         </div>
 
-        {/* Close CTA */}
+        {/* Confirm Button */}
         <button
           type="button"
           onClick={closeFitModal}
-          className="w-full py-3 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] text-black font-bold text-xs uppercase tracking-wider transition-all"
+          className="w-full py-3.5 rounded-xl bg-white hover:bg-neutral-200 text-black font-bold text-xs uppercase tracking-wider transition-all font-mono shadow-sm active:scale-95"
         >
-          Got It, Show My Size {recommendedSize}
+          Apply Size {recommendedSize} to Store
         </button>
+
       </div>
     </div>
   );

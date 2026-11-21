@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Product } from "@/data/products";
-import { TShirtGraphic } from "./TShirtGraphic";
 import { useCart } from "@/context/CartContext";
-import { WhatsAppIcon, StarIcon } from "./icons";
+import { WhatsAppIcon, StarIcon, CheckIcon } from "./icons";
 
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[1] || product.sizes[0]);
+  const [isBackView, setIsBackView] = useState(false);
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
@@ -24,37 +25,85 @@ export function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <div className="group relative flex flex-col rounded-2xl bg-[#111219] border border-[#20222f] hover:border-[#2f3244] transition-all duration-300 p-4 hover:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.7)]">
+    <div className="group relative flex flex-col rounded-2xl bg-neutral-900/80 border border-neutral-800 hover:border-neutral-700 transition-all duration-300 p-4 hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.8)]">
       
-      {/* Top Badge & SKU */}
+      {/* Top Metadata Row */}
       <div className="flex items-center justify-between gap-2 mb-3">
-        <span
-          className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold tracking-wider ${
-            product.tagVariant === "acid"
-              ? "bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00]"
-              : product.tagVariant === "flame"
-              ? "bg-[#ff4d00]/10 border border-[#ff4d00]/30 text-[#ff4d00]"
-              : "bg-blue-500/10 border border-blue-500/30 text-blue-400"
-          }`}
-        >
+        <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold tracking-wider bg-neutral-800 text-neutral-300 border border-neutral-700/60 uppercase">
           {product.tag}
         </span>
-        <span className="text-[11px] font-mono text-zinc-500">
+        <span className="text-[11px] font-mono font-semibold text-neutral-400">
           {product.gsm}
         </span>
       </div>
 
-      {/* Visual T-Shirt Mockup */}
-      <div className="relative rounded-xl bg-[#0b0c10] border border-[#1b1c26] overflow-hidden mb-4 group-hover:border-zinc-700/60 transition-colors">
-        <TShirtGraphic
-          colorHex={selectedColor.hex}
-          theme={product.graphicTheme}
-          badge={product.badgeText}
+      {/* Real Product Photography with Front/Back Toggle & Hover Switch */}
+      <div
+        className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-neutral-950 border border-neutral-800 mb-4 cursor-pointer"
+        onMouseEnter={() => setIsBackView(true)}
+        onMouseLeave={() => setIsBackView(false)}
+        onClick={() => setIsBackView((prev) => !prev)}
+      >
+        <Image
+          src={isBackView ? product.backImage : product.frontImage}
+          alt={product.name}
+          fill
+          className="object-cover object-center transition-all duration-500 group-hover:scale-105"
         />
+
+        {/* View Angle Pill Indicator */}
+        <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded bg-black/75 backdrop-blur-md text-[9px] font-mono tracking-wider font-bold text-neutral-300 border border-neutral-700">
+          {isBackView ? "BACK PRINT" : "FRONT VIEW"}
+        </div>
+
+        {/* Low Stock Warning */}
+        {product.stockRemaining <= 6 && (
+          <div className="absolute bottom-3 left-3 z-10 px-2 py-0.5 rounded bg-amber-500/90 text-black text-[10px] font-mono font-bold">
+            ONLY {product.stockRemaining} LEFT
+          </div>
+        )}
       </div>
 
-      {/* Colorway Toggle */}
-      <div className="flex items-center gap-1.5 mb-3">
+      {/* Product Title & Rating */}
+      <div className="mb-2">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="text-base font-bold text-white group-hover:text-neutral-200 transition-colors line-clamp-1">
+            {product.name}
+          </h3>
+        </div>
+        <p className="text-xs text-neutral-400 line-clamp-1 mt-0.5">
+          {product.fit}
+        </p>
+
+        <div className="flex items-center gap-2 mt-1.5">
+          <div className="flex items-center text-amber-400 text-xs">
+            <StarIcon className="w-3.5 h-3.5" />
+            <span className="font-mono font-semibold ml-1 text-white text-[11px]">
+              {product.rating}
+            </span>
+          </div>
+          <span className="text-neutral-700 text-xs">·</span>
+          <span className="text-[11px] text-neutral-400 font-mono">
+            ({product.reviewCount} reviews)
+          </span>
+        </div>
+      </div>
+
+      {/* Pricing */}
+      <div className="flex items-baseline gap-2 mt-1 mb-3">
+        <span className="text-lg font-black text-white font-mono">
+          ₹{product.price}
+        </span>
+        <span className="text-xs font-mono text-neutral-500 line-through">
+          ₹{product.originalPrice}
+        </span>
+        <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">
+          {product.discount}
+        </span>
+      </div>
+
+      {/* Color Swatches */}
+      <div className="flex items-center gap-1.5 mb-3.5">
         {product.colors.map((c) => (
           <button
             key={c.name}
@@ -62,106 +111,77 @@ export function ProductCard({ product }: { product: Product }) {
             onClick={() => setSelectedColor(c)}
             className={`w-6 h-6 rounded-md border flex items-center justify-center transition-all ${
               selectedColor.name === c.name
-                ? "border-[#ccff00] scale-110 shadow-[0_0_8px_rgba(204,255,0,0.3)]"
-                : "border-[#2b2d3d] hover:border-zinc-500"
+                ? "border-white scale-110 shadow-sm"
+                : "border-neutral-700 hover:border-neutral-500"
             }`}
             title={c.name}
           >
             <span
-              className="w-4 h-4 rounded-sm"
+              className="w-3.5 h-3.5 rounded-sm"
               style={{ backgroundColor: c.hex }}
             />
           </button>
         ))}
-        <span className="text-[11px] font-mono text-zinc-400 ml-1">
+        <span className="text-[10px] font-mono text-neutral-400 ml-1">
           {selectedColor.name}
         </span>
       </div>
 
-      {/* Title & Review Rating */}
-      <div className="mb-2">
-        <h3 className="text-base font-bold text-white group-hover:text-[#ccff00] transition-colors line-clamp-1">
-          {product.name}
-        </h3>
-        <div className="flex items-center gap-1.5 mt-1">
-          <div className="flex items-center text-amber-400 text-xs">
-            <StarIcon className="w-3.5 h-3.5" />
-            <span className="font-mono font-semibold ml-1 text-zinc-300 text-[11px]">
-              {product.rating}
-            </span>
-          </div>
-          <span className="text-zinc-600 text-xs">·</span>
-          <span className="text-[11px] text-zinc-400 font-mono">
-            ({product.reviewCount})
-          </span>
-          <span className="text-zinc-600 text-xs">·</span>
-          <span className="text-[11px] text-emerald-400 font-mono">
-            {product.stockRemaining} left
-          </span>
-        </div>
-      </div>
-
-      {/* Pricing */}
-      <div className="flex items-baseline gap-2 mb-3.5">
-        <span className="text-xl font-black text-white font-mono">
-          ₹{product.price}
-        </span>
-        <span className="text-xs font-mono text-zinc-500 line-through">
-          ₹{product.originalPrice}
-        </span>
-        <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          {product.discount}
-        </span>
-      </div>
-
-      {/* Size Buttons */}
+      {/* Size Selector (Rectangular rounded radii, strictly NO oval) */}
       <div className="mb-4">
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 mb-1.5">
+        <div className="flex items-center justify-between text-[11px] text-neutral-400 font-mono mb-1.5">
           <span>SELECT SIZE:</span>
-          <span className="text-zinc-500">{product.fit}</span>
+          <span className="text-neutral-300 font-semibold">{selectedSize} (Boxy)</span>
         </div>
-        <div className="flex items-center gap-1">
-          {product.sizes.map((size) => (
+        <div className="grid grid-cols-5 gap-1">
+          {product.sizes.map((s) => (
             <button
-              key={size}
+              key={s}
               type="button"
-              onClick={() => setSelectedSize(size)}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
-                selectedSize === size
-                  ? "bg-[#ccff00] text-black border-[#ccff00]"
-                  : "bg-[#161720] border-[#252736] text-zinc-400 hover:text-white hover:border-zinc-600"
+              onClick={() => setSelectedSize(s)}
+              className={`py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
+                selectedSize === s
+                  ? "bg-white text-black border-white"
+                  : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-600"
               }`}
             >
-              {size}
+              {s}
             </button>
           ))}
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="mt-auto grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 mt-auto">
         <button
           type="button"
           onClick={handleAddToCart}
-          className={`py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all ${
+          className={`py-2.5 px-3 rounded-lg text-xs font-bold font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95 ${
             added
-              ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-              : "bg-[#ccff00] hover:bg-[#b8e600] text-black shadow-[0_0_12px_rgba(204,255,0,0.2)]"
+              ? "bg-emerald-500 text-black"
+              : "bg-white hover:bg-neutral-200 text-black"
           }`}
         >
-          {added ? "Added ✓" : "Add to Bag"}
+          {added ? (
+            <>
+              <CheckIcon className="w-3.5 h-3.5" />
+              <span>Added</span>
+            </>
+          ) : (
+            <span>Add to Bag</span>
+          )}
         </button>
 
         <button
           type="button"
           onClick={handleWhatsApp}
-          className="py-2.5 rounded-xl bg-[#171822] hover:bg-[#1f212f] border border-[#2b2e40] text-zinc-200 font-semibold text-xs tracking-wider flex items-center justify-center gap-1 transition-all hover:border-[#25D366]/40"
-          title="Order this tee directly on WhatsApp"
+          className="py-2.5 px-3 rounded-lg text-xs font-semibold font-mono uppercase tracking-wider bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 transition-all flex items-center justify-center gap-1.5 hover:border-emerald-500/50"
         >
-          <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
+          <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400" />
           <span>WhatsApp</span>
         </button>
       </div>
+
     </div>
   );
 }

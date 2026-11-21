@@ -1,229 +1,243 @@
 "use client";
 
 import React, { useState } from "react";
-import { TShirtGraphic } from "./TShirtGraphic";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { PRODUCTS } from "@/data/products";
-import { FlameIcon, WhatsAppIcon, ArrowRightIcon, SparklesIcon, CheckIcon } from "./icons";
+import { WhatsAppIcon, ArrowRightIcon, CheckIcon } from "./icons";
 
 export function Hero() {
   const { addToCart, checkoutWhatsApp } = useCart();
   const heroProduct = PRODUCTS[0];
-  const [selectedColor, setSelectedColor] = useState(heroProduct.colors[0]);
   const [selectedSize, setSelectedSize] = useState("L");
+  const [viewAngle, setViewAngle] = useState<"model" | "back">("model");
+  const [added, setAdded] = useState(false);
+
+  const handleQuickAdd = () => {
+    addToCart(heroProduct, selectedSize, heroProduct.colors[0].name);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   return (
-    <section className="relative w-full overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24 border-b border-[#1b1c28]">
-      {/* Background Streetwear Atmospheric Gradients & Grid */}
-      <div className="absolute inset-0 noise-bg pointer-events-none" />
-      <div className="absolute inset-0 streetwear-grid-pattern pointer-events-none opacity-40" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#ccff00]/10 blur-[130px] rounded-full pointer-events-none" />
+    <section className="relative w-full overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24 border-b border-neutral-900 bg-[#09090b]">
+      {/* Subtle luxury ambient background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/20 via-black to-black pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* Left Column: Streetwear Headline & Story */}
+          {/* Left Column: Streetwear Editorial Story */}
           <div className="lg:col-span-7 flex flex-col items-start">
             
-            {/* Live Drop Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141620] border border-[#2b2d3d] text-xs font-mono text-zinc-300 mb-6">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ccff00] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ccff00]"></span>
-              </span>
-              <span className="font-bold text-[#ccff00]">DROP 04 LIVE</span>
-              <span className="text-zinc-600">/</span>
-              <span>260 GSM COMBER COTTON</span>
+            {/* Drop Archival Tag */}
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-mono tracking-widest text-neutral-300 uppercase mb-6">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span className="font-bold text-white">COLLECTION 04</span>
+              <span className="text-neutral-700">/</span>
+              <span>280 GSM FRENCH TERRY</span>
             </div>
 
             {/* Display Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-[1.05] mb-5">
-              Heavyweight <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ccff00] via-[#e5ff80] to-white">
-                Oversized Graphics.
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-[1.02] mb-6">
+              Engineered <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-100 via-neutral-300 to-neutral-500">
+                Heavyweight Drape.
               </span>
               <br />
               Zero Apologies.
             </h1>
 
             {/* Subheading */}
-            <p className="text-base sm:text-lg text-zinc-400 max-w-xl font-normal leading-relaxed mb-8">
-              Crafted from dense 260 GSM super-combed French Terry cotton with
-              custom 3D tactile puff prints. Relaxed drop-shoulder silhouettes
-              designed to hold their structured drape without sagging.
+            <p className="text-base sm:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed mb-8">
+              Milled from dense 280 GSM super-combed French Terry cotton.
+              Engineered with pronounced drop-shoulder architecture and a 1.25"
+              anti-sag Lycra ribbed collar that holds a sharp boxy silhouette forever.
             </p>
 
-            {/* Tech Badges Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-lg mb-8">
-              <div className="p-3 rounded-xl bg-[#12131a] border border-[#20222e] flex flex-col">
-                <span className="text-[11px] font-mono uppercase text-zinc-500 font-semibold">Fabric</span>
-                <span className="text-sm font-bold text-white mt-0.5">260 GSM Terry</span>
+            {/* Technical Specification Chips */}
+            <div className="grid grid-cols-3 gap-3 w-full max-w-lg mb-8">
+              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex flex-col">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">
+                  Fabric Weight
+                </span>
+                <span className="text-sm font-bold text-white mt-1">280 GSM Terry</span>
               </div>
-              <div className="p-3 rounded-xl bg-[#12131a] border border-[#20222e] flex flex-col">
-                <span className="text-[11px] font-mono uppercase text-zinc-500 font-semibold">Print Tech</span>
-                <span className="text-sm font-bold text-[#ccff00] mt-0.5">3D Puff Rubber</span>
+              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex flex-col">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">
+                  Neckband
+                </span>
+                <span className="text-sm font-bold text-neutral-200 mt-1">1.25" Lycra Rib</span>
               </div>
-              <div className="p-3 rounded-xl bg-[#12131a] border border-[#20222e] flex flex-col col-span-2 sm:col-span-1">
-                <span className="text-[11px] font-mono uppercase text-zinc-500 font-semibold">Fit Style</span>
-                <span className="text-sm font-bold text-white mt-0.5">Boxy Drop Cut</span>
+              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex flex-col">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">
+                  Batch Run
+                </span>
+                <span className="text-sm font-bold text-amber-400 mt-1">150 Units Only</span>
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* Action Buttons (Strictly rectangular rounded radii) */}
             <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
               <a
                 href="#drops"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] text-black font-bold text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(204,255,0,0.3)] hover:shadow-[0_0_30px_rgba(204,255,0,0.5)]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white hover:bg-neutral-200 text-black font-bold text-xs uppercase tracking-wider transition-all shadow-[0_4px_20px_rgba(255,255,255,0.12)] active:scale-95"
               >
-                <span>Shop Drop 04</span>
+                <span>Explore Drop 04</span>
                 <ArrowRightIcon className="w-4 h-4" />
               </a>
 
               <button
                 type="button"
                 onClick={checkoutWhatsApp}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#161722] hover:bg-[#1e202f] border border-[#2d3042] text-zinc-200 font-semibold text-sm tracking-wide transition-all hover:border-[#25D366]/50"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 font-semibold text-xs uppercase tracking-wider transition-all hover:border-neutral-500"
               >
-                <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+                <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
                 <span>Instant WhatsApp Order</span>
               </button>
             </div>
 
-            {/* Social Proof Metric */}
-            <div className="flex items-center gap-4 mt-8 pt-6 border-t border-[#1d1f2b] w-full">
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-zinc-800 border-2 border-black flex items-center justify-center text-[10px] font-bold text-zinc-300">BLR</div>
-                <div className="w-8 h-8 rounded-full bg-zinc-700 border-2 border-black flex items-center justify-center text-[10px] font-bold text-zinc-200">BOM</div>
-                <div className="w-8 h-8 rounded-full bg-zinc-600 border-2 border-black flex items-center justify-center text-[10px] font-bold text-white">KL</div>
-              </div>
-              <div className="text-xs text-zinc-400">
-                <strong className="text-white font-semibold">1,400+ verified tees</strong> shipped across India this month
-              </div>
+            {/* Proof Tagline */}
+            <div className="flex items-center gap-3 mt-8 pt-6 border-t border-neutral-800/80 w-full text-xs font-mono text-neutral-500">
+              <span className="w-2 h-2 rounded-sm bg-neutral-600" />
+              <span>HAND-FINISHED IN LIMITED RUNS · PRE-SHRUNK BIO-WASHED COTTON</span>
             </div>
           </div>
 
-          {/* Right Column: Interactive Drop Spotlight Product Card */}
+          {/* Right Column: High-Fashion Editorial Spotlight Card */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-2xl bg-[#12131c] border border-[#262838] p-5 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div className="relative rounded-2xl bg-neutral-900/90 border border-neutral-800 p-4 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden group">
               
-              {/* Card Header Status */}
-              <div className="flex items-center justify-between gap-2 pb-4 mb-2 border-b border-[#1f212f]">
+              {/* Card Meta Header */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-800">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-[#ccff00]/10 border border-[#ccff00]/30 text-[11px] font-mono font-bold text-[#ccff00]">
-                    FEATURED DROP
+                  <span className="px-2 py-0.5 rounded-md bg-neutral-800 text-[10px] font-mono font-bold tracking-wider text-neutral-300">
+                    SIGNATURE PIECE
                   </span>
-                  <span className="text-xs text-zinc-400 font-mono">
+                  <span className="text-xs text-neutral-500 font-mono">
                     {heroProduct.sku}
                   </span>
                 </div>
-                <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  {heroProduct.stockRemaining} left in stock
-                </span>
+                  <span className="text-xs font-mono text-emerald-400 font-semibold">
+                    {heroProduct.stockRemaining} units left
+                  </span>
+                </div>
               </div>
 
-              {/* Interactive Mockup Graphic */}
-              <div className="rounded-xl bg-[#0b0c10] border border-[#1d1e29] overflow-hidden relative">
-                <TShirtGraphic
-                  colorHex={selectedColor.hex}
-                  theme="CYBER APE"
-                  badge={`${selectedColor.name} · 260 GSM`}
+              {/* Photo Showcase with Model / Back Angle Toggle */}
+              <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-neutral-950 border border-neutral-800">
+                <Image
+                  src={
+                    viewAngle === "model"
+                      ? "/images/editorial/hero_tshirt_model.jpg"
+                      : "/images/products/tee_studio_black.jpg"
+                  }
+                  alt={heroProduct.name}
+                  fill
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  priority
                 />
-              </div>
 
-              {/* Product Info & Pricing */}
-              <div className="mt-5">
-                <h3 className="text-lg font-bold text-white">
-                  {heroProduct.name}
-                </h3>
-                <div className="flex items-baseline gap-2.5 mt-1.5">
-                  <span className="text-2xl font-black text-[#ccff00] font-mono">
-                    ₹{heroProduct.price}
+                {/* Subtle Garment Architecture Overlays */}
+                <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5 pointer-events-none">
+                  <span className="px-2 py-1 rounded bg-black/70 backdrop-blur-md text-[10px] font-mono text-neutral-300 border border-white/10">
+                    [22.5" BOX CHEST]
                   </span>
-                  <span className="text-sm font-mono text-zinc-500 line-through">
-                    ₹{heroProduct.originalPrice}
-                  </span>
-                  <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    {heroProduct.discount}
+                  <span className="px-2 py-1 rounded bg-black/70 backdrop-blur-md text-[10px] font-mono text-neutral-300 border border-white/10">
+                    [DROP SHOULDER SEAM]
                   </span>
                 </div>
 
-                {/* Colorway Selector */}
-                <div className="mt-4">
-                  <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-zinc-400 font-mono uppercase text-[11px]">
-                      Colorway: <strong className="text-white">{selectedColor.name}</strong>
-                    </span>
+                {/* View Angle Switcher (Front/Back) */}
+                <div className="absolute bottom-4 right-4 z-10 flex items-center bg-black/80 backdrop-blur-md border border-neutral-700 rounded-lg p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setViewAngle("model")}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold uppercase transition-all ${
+                      viewAngle === "model"
+                        ? "bg-white text-black"
+                        : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    Editorial
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewAngle("back")}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold uppercase transition-all ${
+                      viewAngle === "back"
+                        ? "bg-white text-black"
+                        : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    Back Graphic
+                  </button>
+                </div>
+              </div>
+
+              {/* Garment Details & Direct Add */}
+              <div className="mt-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-bold text-white tracking-tight">
+                      {heroProduct.name}
+                    </h3>
+                    <p className="text-xs text-neutral-400 mt-0.5">
+                      {heroProduct.fabric}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {heroProduct.colors.map((c) => (
-                      <button
-                        key={c.name}
-                        type="button"
-                        onClick={() => setSelectedColor(c)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium flex items-center gap-1.5 border transition-all ${
-                          selectedColor.name === c.name
-                            ? "bg-zinc-800 border-[#ccff00] text-white shadow-[0_0_10px_rgba(204,255,0,0.2)]"
-                            : "bg-[#161720] border-[#252736] text-zinc-400 hover:text-white"
-                        }`}
-                      >
-                        <span
-                          className="w-3 h-3 rounded-sm border border-black/40"
-                          style={{ backgroundColor: c.hex }}
-                        />
-                        <span>{c.name}</span>
-                      </button>
-                    ))}
+                  <div className="text-right">
+                    <span className="text-xl font-black text-white font-mono">
+                      ₹{heroProduct.price}
+                    </span>
+                    <span className="block text-[11px] font-mono text-neutral-500 line-through">
+                      ₹{heroProduct.originalPrice}
+                    </span>
                   </div>
                 </div>
 
                 {/* Size Selector */}
-                <div className="mt-4">
-                  <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-zinc-400 font-mono uppercase text-[11px]">
-                      Select Boxy Size:
-                    </span>
-                    <span className="text-[11px] text-[#ccff00] font-mono">
-                      Boxy oversized drape
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-5 gap-1.5">
-                    {heroProduct.sizes.map((size) => (
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <div className="grid grid-cols-5 gap-1.5 flex-1">
+                    {heroProduct.sizes.map((s) => (
                       <button
-                        key={size}
+                        key={s}
                         type="button"
-                        onClick={() => setSelectedSize(size)}
-                        className={`py-2 rounded-lg text-xs font-mono font-bold border transition-all ${
-                          selectedSize === size
-                            ? "bg-[#ccff00] text-black border-[#ccff00] shadow-[0_0_12px_rgba(204,255,0,0.3)]"
-                            : "bg-[#161720] border-[#252736] text-zinc-300 hover:text-white hover:border-zinc-600"
+                        onClick={() => setSelectedSize(s)}
+                        className={`py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
+                          selectedSize === s
+                            ? "bg-white text-black border-white"
+                            : "bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
                         }`}
                       >
-                        {size}
+                        {s}
                       </button>
                     ))}
                   </div>
-                </div>
 
-                {/* Action Row */}
-                <div className="grid grid-cols-2 gap-2 mt-5">
                   <button
                     type="button"
-                    onClick={() => addToCart(heroProduct, selectedSize, selectedColor.name)}
-                    className="w-full py-3 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] text-black font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(204,255,0,0.25)]"
+                    onClick={handleQuickAdd}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                      added
+                        ? "bg-emerald-500 text-black"
+                        : "bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white"
+                    }`}
                   >
-                    Add To Bag
-                  </button>
-                  <button
-                    type="button"
-                    onClick={checkoutWhatsApp}
-                    className="w-full py-3 rounded-xl bg-[#181a25] hover:bg-[#202332] border border-[#2b2e40] text-zinc-200 font-semibold text-xs tracking-wider flex items-center justify-center gap-1.5 transition-all"
-                  >
-                    <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
-                    <span>WhatsApp Order</span>
+                    {added ? (
+                      <>
+                        <CheckIcon className="w-3.5 h-3.5" />
+                        <span>Added</span>
+                      </>
+                    ) : (
+                      <span>+ Bag</span>
+                    )}
                   </button>
                 </div>
               </div>
+
             </div>
           </div>
 
