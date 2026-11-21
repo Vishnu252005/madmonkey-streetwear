@@ -1,44 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
-interface Hotspot {
-  id: string;
-  x: string; // percentage
-  y: string;
-  title: string;
-  desc: string;
-}
-
-const HOTSPOTS: Hotspot[] = [
-  {
-    id: "collar",
-    x: "67%",
-    y: "31%",
-    title: "1.25\" Anti-Sag Collar",
-    desc: "Milled with high-recovery Lycra rib that stays crisp after 50+ washes.",
-  },
-  {
-    id: "graphic",
-    x: "68%",
-    y: "41%",
-    title: "High-Density Puff Print",
-    desc: "Tactile, rubberized hand-drawn smiling ape artwork in vibrant orange.",
-  },
-  {
-    id: "shoulder",
-    x: "78%",
-    y: "35%",
-    title: "Calibrated Drop Shoulder",
-    desc: "Engineered 280 GSM French Terry drape that holds boxy structure.",
-  },
-];
-
 export function MonkeyCapHero() {
-  const [activePin, setActivePin] = useState<string | null>(null);
-
   const scrollToCatalog = () => {
     const el = document.getElementById("catalog");
     if (el) {
@@ -69,15 +35,15 @@ export function MonkeyCapHero() {
           {/* Left Column: Hero Copy & CTA */}
           <div className="lg:col-span-5 flex flex-col justify-center">
             
-            {/* Tag / Drop Specifier with Pulsing Live Dot */}
-            <div className="inline-flex items-center gap-2 mb-4 bg-white/80 backdrop-blur-sm border border-[#dfdacd] px-3 py-1 rounded-md w-max shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#eb3324] animate-ping" />
-              <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-neutral-800">
-                MONKEY CAP / DROP 01 LIVE
+            {/* Tag / Drop Specifier */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-[#eb3324] font-black text-sm">✱</span>
+              <span className="text-xs font-mono font-bold tracking-widest uppercase text-neutral-600">
+                MONKEY CAP / DROP 01
               </span>
             </div>
 
-            {/* Massive Headline with 3D Pop Shadow */}
+            {/* Massive Headline */}
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-neutral-950 tracking-tight leading-[0.92] uppercase font-sans mb-6 drop-shadow-xs">
               Monkey <br />
               <span className="relative inline-block">
@@ -131,7 +97,7 @@ export function MonkeyCapHero() {
 
           </div>
 
-          {/* Right Column: 3D Interactive Card with Hotspots and Floating Stickers */}
+          {/* Right Column: 3D Interactive Card with Clean Photo & Floating Stickers */}
           <div className="lg:col-span-7 relative">
             
             {/* Floating 3D Sticker Badge 1 (Top Left) */}
@@ -150,7 +116,7 @@ export function MonkeyCapHero() {
               </div>
             </div>
 
-            {/* Main 3D Tilt Card */}
+            {/* Main 3D Tilt Card (Clean photo with zero red dots) */}
             <Tilt3DCard maxTilt={10} scale={1.02} glare={true} className="w-full">
               <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-2xl bg-amber-50">
                 
@@ -161,42 +127,6 @@ export function MonkeyCapHero() {
                   priority
                   className="object-cover object-center"
                 />
-
-                {/* Interactive Hotspot Pins on Garment */}
-                {HOTSPOTS.map((pin) => (
-                  <div
-                    key={pin.id}
-                    style={{ top: pin.y, left: pin.x }}
-                    className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
-                    onMouseEnter={() => setActivePin(pin.id)}
-                    onMouseLeave={() => setActivePin(null)}
-                  >
-                    {/* Pulsing Pin Button */}
-                    <button
-                      type="button"
-                      onClick={() => setActivePin(activePin === pin.id ? null : pin.id)}
-                      className="relative w-7 h-7 rounded-full bg-white/95 border-2 border-neutral-900 flex items-center justify-center shadow-lg transition-transform hover:scale-125 focus:outline-none"
-                    >
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#eb3324]" />
-                      <span className="absolute inset-0 rounded-full border-2 border-[#eb3324] animate-ping pointer-events-none opacity-75" />
-                    </button>
-
-                    {/* Popout Tooltip */}
-                    {activePin === pin.id && (
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 p-3 rounded-xl bg-neutral-950/95 text-white border border-neutral-700 shadow-2xl backdrop-blur-md z-40 text-left pointer-events-auto transition-all animate-in fade-in zoom-in-95">
-                        <div className="text-[10px] font-mono font-black text-[#ffcc00] uppercase tracking-wider mb-0.5">
-                          ATELIER SPEC
-                        </div>
-                        <div className="text-xs font-bold text-white mb-1">
-                          {pin.title}
-                        </div>
-                        <div className="text-[11px] text-neutral-300 font-sans leading-tight">
-                          {pin.desc}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
 
                 {/* Right Vertical Editorial Text */}
                 <div className="hidden sm:flex absolute right-4 inset-y-0 flex-col justify-between py-6 pointer-events-none select-none text-neutral-900 font-mono text-[10px] uppercase font-bold tracking-widest z-10">
