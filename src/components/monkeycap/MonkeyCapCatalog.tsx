@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { MONKEY_CAP_PRODUCTS, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { Tilt3DCard } from "@/components/ui/Tilt3DCard";
 
 export function MonkeyCapCatalog() {
   const { addToCart } = useCart();
@@ -13,6 +14,7 @@ export function MonkeyCapCatalog() {
     "mc-02": "M",
     "mc-03": "M",
   });
+  const [addedEffect, setAddedEffect] = useState<string | null>(null);
 
   const filtered =
     filter === "all"
@@ -27,10 +29,18 @@ export function MonkeyCapCatalog() {
     const size = selectedSizes[product.id] || "M";
     const color = product.colors[0]?.name || "Default";
     addToCart(product, size, color);
+
+    // Micro-interaction trigger
+    setAddedEffect(product.id);
+    setTimeout(() => {
+      setAddedEffect(null);
+    }, 1200);
   };
 
   return (
-    <section id="catalog" className="w-full bg-[#fbf9f4] py-16 sm:py-24 border-b border-[#ece8df]">
+    <section id="catalog" className="w-full bg-[#fbf9f4] py-16 sm:py-24 border-b border-[#ece8df] relative">
+      
+      {/* Decorative Background Accents */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         
         {/* Header & Filter Row */}
@@ -67,68 +77,87 @@ export function MonkeyCapCatalog() {
           </div>
         </div>
 
-        {/* 3 Product Cards Grid */}
+        {/* 3 Product Cards Grid with 3D Tilt and Depth */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {filtered.map((item) => {
             const currentSize = selectedSizes[item.id] || "M";
+            const isJustAdded = addedEffect === item.id;
 
             return (
               <div key={item.id} className="flex flex-col group">
                 
-                {/* Visual Square with Vibrant Background Color */}
-                <div
-                  className="relative aspect-square w-full rounded-2xl overflow-hidden border border-[#ece8df] shadow-sm mb-5 transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ backgroundColor: item.cardBgColor || "#f0eee6" }}
+                {/* 3D Tilt Product Canvas */}
+                <Tilt3DCard
+                  maxTilt={14}
+                  scale={1.03}
+                  glare={true}
+                  className="w-full mb-5"
                 >
-                  {/* Top Left Badge */}
-                  {item.tag && (
-                    <div className="absolute top-3.5 left-3.5 z-10">
-                      <span className="px-2.5 py-1 rounded bg-black text-[10px] font-black uppercase tracking-wider text-[#dfff00]">
-                        {item.tag}
+                  <div
+                    className="relative aspect-square w-full rounded-2xl overflow-hidden border-2 border-neutral-900 shadow-lg preserve-3d"
+                    style={{ backgroundColor: item.cardBgColor || "#f0eee6" }}
+                  >
+                    {/* Top Left Badge */}
+                    {item.tag && (
+                      <div className="absolute top-3.5 left-3.5 z-20">
+                        <span className="px-2.5 py-1 rounded bg-black text-[10px] font-black uppercase tracking-wider text-[#dfff00] shadow-md border border-neutral-800">
+                          {item.tag}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Product Shirt Graphic with 3D Pop Out */}
+                    <div
+                      className="relative w-full h-full p-2 flex items-center justify-center transition-transform duration-500 group-hover:scale-108"
+                      style={{ transform: "translateZ(30px)" }}
+                    >
+                      <Image
+                        src={item.frontImage}
+                        alt={item.name}
+                        fill
+                        className="object-cover object-center drop-shadow-xl"
+                      />
+                    </div>
+
+                    {/* Bottom Right SKU Tag */}
+                    <div className="absolute bottom-3 right-3 z-20">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-black/80 bg-white/75 backdrop-blur-sm px-2 py-0.5 rounded shadow-xs border border-black/10">
+                        {item.sku}
                       </span>
                     </div>
-                  )}
 
-                  {/* Product Shirt Graphic */}
-                  <div className="relative w-full h-full p-2 flex items-center justify-center">
-                    <Image
-                      src={item.frontImage}
-                      alt={item.name}
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                    {/* Floating Corner Spec Sticker on Hover */}
+                    <div className="absolute top-3 right-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="bg-white text-black font-mono font-bold text-[9px] uppercase px-2 py-0.5 rounded shadow-sm border border-neutral-400">
+                        {item.gsm}
+                      </span>
+                    </div>
 
-                  {/* Bottom Right SKU Tag */}
-                  <div className="absolute bottom-3 right-3 z-10">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-black/70 bg-white/60 backdrop-blur-sm px-1.5 py-0.5 rounded">
-                      {item.sku}
-                    </span>
                   </div>
-                </div>
+                </Tilt3DCard>
 
                 {/* Product Info Row */}
                 <div className="flex items-start justify-between gap-4 mb-1">
-                  <h3 className="text-lg font-black text-neutral-950 uppercase tracking-tight font-sans">
+                  <h3 className="text-lg font-black text-neutral-950 uppercase tracking-tight font-sans group-hover:text-[#eb3324] transition-colors">
                     {item.name}
                   </h3>
                   <div className="text-right">
                     <span className="text-base font-black text-neutral-950 font-mono">
                       ${item.priceUsd}
                     </span>
-                    <span className="text-[11px] text-neutral-400 font-mono block">
+                    <span className="text-[11px] text-neutral-500 font-mono block">
                       (₹{item.price})
                     </span>
                   </div>
                 </div>
 
                 {/* Subtitle / Fit Spec */}
-                <p className="text-xs text-neutral-500 font-sans mb-3">
+                <p className="text-xs text-neutral-600 font-sans mb-3">
                   {item.fit}
                 </p>
 
                 {/* Size Label */}
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400 mb-1 block">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 mb-1 block">
                   SIZE
                 </span>
 
@@ -138,7 +167,7 @@ export function MonkeyCapCatalog() {
                     <select
                       value={currentSize}
                       onChange={(e) => handleSizeChange(item.id, e.target.value)}
-                      className="w-full appearance-none bg-white border border-[#dfdacd] text-neutral-900 font-bold text-xs uppercase px-3 py-2.5 rounded-lg focus:outline-none focus:border-black cursor-pointer shadow-sm"
+                      className="w-full appearance-none bg-white border border-[#dfdacd] text-neutral-900 font-bold text-xs uppercase px-3 py-2.5 rounded-lg focus:outline-none focus:border-black cursor-pointer shadow-xs"
                     >
                       {item.sizes.map((s) => (
                         <option key={s} value={s}>
@@ -154,16 +183,32 @@ export function MonkeyCapCatalog() {
                   <button
                     type="button"
                     onClick={() => handleAddToCart(item)}
-                    className="flex-1 py-2.5 px-4 rounded-lg bg-[#eb3324] hover:bg-[#d6281a] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all"
+                    className={`flex-1 py-2.5 px-4 rounded-lg font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all ${
+                      isJustAdded
+                        ? "bg-emerald-600 text-white"
+                        : "bg-[#eb3324] hover:bg-[#d6281a] text-white hover:shadow-md"
+                    }`}
                   >
-                    <span>Add to bag</span>
-                    <span className="text-xs">↗</span>
+                    {isJustAdded ? (
+                      <>
+                        <span>✓ Added to bag</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Add to bag</span>
+                        <span className="text-xs">↗</span>
+                      </>
+                    )}
                   </button>
                 </div>
 
                 {/* Color Scheme Label */}
-                <div className="text-[11px] text-neutral-500 font-mono">
-                  {item.colors[0]?.name}
+                <div className="text-[11px] text-neutral-500 font-mono flex items-center gap-1.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full border border-neutral-300"
+                    style={{ backgroundColor: item.colors[0]?.hex || "#000" }}
+                  />
+                  <span>{item.colors[0]?.name}</span>
                 </div>
 
               </div>
